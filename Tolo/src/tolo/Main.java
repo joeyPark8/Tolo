@@ -4,15 +4,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.web.WebView;
+
 public class Main {
     Main() {
         JFrame frame = new JFrame();
-        frame.setSize(640, 480);
-        frame.setLocation(150, 150);
-        frame.setTitle("tolo");
-        frame.setResizable(false);
+        frame.setSize(1936, 1056);
+        frame.setLocation(0, 0);
+        frame.setTitle("Tolo");
+        frame.setResizable(true);
         frame.setVisible(true);
-        frame.setAlwaysOnTop(true);
+        //frame.setAlwaysOnTop(true);
         frame.setLayout(null);
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -21,69 +26,57 @@ public class Main {
             }
         });
 
+        int labelWith = 100, labelHeight = 50;
         Label label = new Label();
-        label.setBounds(frame.getWidth() / 2 - 50, frame.getHeight() / 2 - 50, 150, 20);
-        label.setText("Hello :D");
-        label.setVisible(false);
-        frame.add(label);
+        label.setBounds(frame.getWidth() / 2 - labelWith / 2, frame.getHeight() / 2 - labelHeight / 2, labelWith, labelHeight);
+        label.setText("Not available");
 
-        JPasswordField passwordField = new JPasswordField();
-        passwordField.setBounds(frame.getWidth() / 2 - 50, frame.getHeight() / 2, 100, 25);
-        frame.add(passwordField);
-
-        TextField field = new TextField();
-        field.setBounds(frame.getWidth() / 2 - 50, frame.getHeight() / 2 - 25, 100, 25);
-        frame.add(field);
-
-        Button button = new Button();
-        button.setBounds(frame.getWidth() / 2 + 55, frame.getHeight() / 2 - 20, 70, 35);
-        button.setLabel("log in");
-        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        button.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (field.getText().equalsIgnoreCase("semin123")) {
-                    if (passwordField.getText().equalsIgnoreCase("psm135790.1")) {
-                        System.out.println("id: " + field.getText());
-                        System.out.println("password: " + passwordField.getText());
-                        System.out.println("-----welcome-----");
-                        field.setText("");
-                        passwordField.setText("");
-                        label.setVisible(false);
-
-                        JFrame frame2 = new JFrame();
-                        frame2.setSize(640, 480);
-                        frame2.setLocation(800, 150);
-                        frame2.setTitle("tolo (manage)");
-                        frame2.setResizable(false);
-                        frame2.setVisible(true);
-                        frame2.setAlwaysOnTop(true);
-                        frame2.setLayout(null);
-                        frame2.addWindowListener(new WindowAdapter() {
-                            @Override
-                            public void windowClosing(WindowEvent e) {
-                                System.exit(0);
-                            }
-                        });
-                    }
-                    else {
-                        label.setVisible(true);
-                        label.setBackground(Color.red);
-                        label.setText("id or password is wrong");
-                        field.setText("");
-                        passwordField.setText("");
-                    }
-                }
-                else {
-                    label.setVisible(true);
-                    label.setBackground(Color.red);
-                    label.setText("id or password is wrong");
-                    field.setText("");
-                    passwordField.setText("");
-                }
-            }
+        JFXPanel jfxPanel_korean1 = new JFXPanel();
+        Platform.runLater(() -> {
+            WebView webView = new WebView();
+            webView.getEngine().load("https://ebook.mirae-n.com/@kb2054/cover");
+            jfxPanel_korean1.setScene(new Scene(webView));
         });
-        frame.add(button);
+
+        JFXPanel jfxPanel_korean2 = new JFXPanel();
+        Platform.runLater(() -> {
+            WebView webView = new WebView();
+            webView.getEngine().load("https://ebook.mirae-n.com/@kb2368/cover");
+            jfxPanel_korean2.setScene(new Scene(webView));
+        });
+
+        JFXPanel jfxPanel_history1 = new JFXPanel();
+        Platform.runLater(() -> {
+            WebView webView = new WebView();
+            webView.getEngine().load("https://ebook.mirae-n.com/@kb3811/cover");
+            jfxPanel_history1.setScene(new Scene(webView));
+        });
+
+        JFXPanel jfxPanel_science = new JFXPanel();
+        Platform.runLater(() -> {
+            WebView webView = new WebView();
+            webView.getEngine().load("https://webdt.edunet.net/viewer/");
+            jfxPanel_science.setScene(new Scene(webView));
+        });
+
+        JFXPanel jfxPanel_english = new JFXPanel();
+        Platform.runLater(() -> {
+            WebView webView = new WebView();
+            webView.getEngine().load("https://webdt.edunet.net/viewer/");
+            jfxPanel_english.setScene(new Scene(webView));
+        });
+
+        JTabbedPane tab = new JTabbedPane();
+        tab.setBounds(0, 0, frame.getWidth(), frame.getHeight() - 20);
+        tab.setVisible(true);
+        tab.addTab("국어2-1", jfxPanel_korean1);
+        tab.addTab("국어2-2", jfxPanel_korean2);
+        tab.addTab("수학2", label);
+        tab.addTab("역사1", jfxPanel_history1);
+        tab.addTab("과학2", jfxPanel_science);
+        tab.addTab("영어2", jfxPanel_english);
+
+        frame.add(tab);
     }
 
     public static void main(String[] args) {
